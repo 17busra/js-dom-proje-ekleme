@@ -6,37 +6,34 @@
     <title>Project Details</title>
     
     <style>
-        /* body: Tüm sayfanın arka planı, yazı tipi ve rengini ayarladığımız yer */
+
         body {
-            /* Eski tip gazetelerdeki gibi klasik tırnaklı bir yazı tipi seçtik */
+
             font-family: "Times New Roman", Times, serif;
-            margin: 20px; /* Sayfanın kenarlarından 20 piksel boşluk bıraktık */
-            background-color: #f4f4f4; /* Arka plan bembeyaz olmasın, hafif gri olsun dedik */
-            color: #000; /* Yazılar siyah olsun */
+            margin: 20px; 
+            background-color: #f4f4f4;
+            color: #000; 
         }
 
-        /* Başlıkların (h2) boyutunu ve yukarıdan/aşağıdan boşluklarını ayarladık */
+
         h2 {
             font-size: 28px;
             margin-bottom: 20px;
             margin-top: 30px;
         }
 
-        /* .form-group: Her bir yazı girme alanının (etiket + kutu) altından biraz boşluk bıraktık ki yapışık durmasınlar */
-        .form-group {
+         .form-group {
             margin-bottom: 10px;
         }
 
-        /* label: "Author", "Project" yazan yazılar. 
-           Bunların hepsinin genişliğini 120 piksel (width: 120px) olarak sabitledik ki 
-           yanlarındaki giriş kutuları dümdüz, ip gibi aynı hizada dursun. */
+    
         label {
             display: inline-block;
             width: 120px;
             font-size: 20px;
         }
 
-        /* input: Kullanıcının yazı yazdığı beyaz kutular. Boyutunu ve siyah çerçevesini ayarladık. */
+
         input[type="text"] {
             width: 200px;
             padding: 3px;
@@ -45,43 +42,40 @@
             font-family: inherit;
         }
 
-        /* button: Ekleme (Add) butonu. Genişliğini, kutuların toplam genişliğine (etiket+kutu) denk gelsin diye 335 piksel yaptık. */
         button#addBtn {
             width: 335px; 
             padding: 5px;
             margin-top: 10px;
             font-size: 18px;
-            background-color: #e0e0e0; /* Hafif gri bir buton */
-            border: 1px solid #000; /* Siyah çerçeveli */
-            cursor: pointer; /* Fareyle üstüne gelince el işareti çıksın */
+            background-color: #e0e0e0; 
+            border: 1px solid #000; 
+            cursor: pointer; 
             font-family: inherit;
         }
 
-        /* Fare butonun üstüne geldiğinde butonun rengi biraz daha koyu gri olsun */
+
         button#addBtn:hover {
             background-color: #cccccc;
         }
 
-        /* table: Verilerin listeleneceği tablonun tasarımı. 
-           border-collapse: collapse; komutu hücrelerin arasındaki çift çizgileri birleştirip tek, ince bir çizgi yapar. */
-        table {
+         table {
             border-collapse: collapse; 
             margin-top: 10px;
         }
 
-        /* Tablonun kendisine ve içindeki hücrelere (th, td) siyah ince çerçeve çizdik */
+        
         table, th, td {
             border: 1px solid black; 
         }
 
-        /* th (Tablo başlığı) ve td (Tablo içi veri) hücrelerinin iç boşlukları ve yazı boyutları */
+
         th, td {
             padding: 5px 10px;
             text-align: left; /* Yazılar sola dayalı olsun */
             font-size: 20px;
         }
 
-        /* Sadece tablonun en üstündeki başlıklar (Author, Project, Cost) kalın (bold) yazılsın */
+       
         th {
             font-weight: bold;
         }
@@ -114,58 +108,46 @@
     </table>
 
     <script>
-        // Butona basıldığında çalışacak olan ana motor burası:
+
         function addProject() {
             
-            // 1. ADIM: KUTULARIN İÇİNDEKİLERİ AL
-            // Git id'si 'author', 'project', 'cost' olan kutuları bul.
-            // '.value' diyerek içlerine yazılan yazıyı al.
-            // '.trim()' diyerek adam yanlışlıkla boşluk tuşuna bastıysa o gizli boşlukları silip temizle.
+          
             const author = document.getElementById('author').value.trim();
             const project = document.getElementById('project').value.trim();
             const cost = document.getElementById('cost').value.trim();
 
-            // 2. ADIM: GÜVENLİK KONTROLÜ
-            // Eğer yazar kutusu BOŞSA ("") VEYA (||) proje kutusu BOŞSA VEYA maliyet kutusu BOŞSA...
+ 
             if (author === "" || project === "" || cost === "") {
-                // Ekrana uyarı ver!
+
                 alert("All values are not entered.");
-                // 'return' diyerek işlemi burada kes/durdur. Aşağıdaki kodları (tabloya ekleme kısmını) okuma!
+              
                 return; 
             }
 
-            // 3. ADIM: EKLENECEK YERİ BUL
-            // HTML'in içindeki id'si 'projectTable' olan tablonun 'tbody' (gövde) kısmını bul ve 'tableBody' değişkenine ata.
+           
             const tableBody = document.querySelector('#projectTable tbody');
 
-            // 4. ADIM: YENİ SATIR VE HÜCRELER OLUŞTUR (Sanal olarak)
-            // 'tr' (table row) yani yepyeni boş bir satır yaratıyoruz.
             const newRow = document.createElement('tr');
 
-            // Sırayla her bir veri için 'td' (table data / hücre) yaratıyoruz.
-            // Yazar için hücre oluşturduk ve içine adamın kutuya yazdığı 'author' bilgisini koyduk.
+
             const authorCell = document.createElement('td');
             authorCell.textContent = author;
             
-            // Proje için hücre oluşturduk ve içine 'project' bilgisini koyduk.
+
             const projectCell = document.createElement('td');
             projectCell.textContent = project;
-            
-            // Maliyet için hücre oluşturduk ve içine 'cost' bilgisini koyduk.
+
             const costCell = document.createElement('td');
             costCell.textContent = cost;
 
-            // 5. ADIM: HÜCRELERİ SATIRA, SATIRI DA TABLOYA MONTE ET
-            // 'appendChild' (çocuk olarak ekle) komutu ile oluşturduğumuz bu üç hücreyi sırayla o yeni satırın (newRow) içine yerleştiriyoruz.
+         
             newRow.appendChild(authorCell);
             newRow.appendChild(projectCell);
             newRow.appendChild(costCell);
 
-            // İçi dolu olan yeni satırı da gidip tablonun gövdesinin (tableBody) en altına ekliyoruz.
+
             tableBody.appendChild(newRow);
 
-            // 6. ADIM: TEMİZLİK
-            // Adam yeni bir şey eklemek istediğinde eskilere bakıp silmekle uğraşmasın diye, giriş kutularının değerini (value) zorla siliyoruz ("").
             document.getElementById('author').value = "";
             document.getElementById('project').value = "";
             document.getElementById('cost').value = "";
